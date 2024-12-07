@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { type ImageSource } from "expo-image";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
