@@ -17,7 +17,7 @@ import * as MediaLibrary from "expo-media-library";
 
 const PlaceholderImage = require("@/assets/images/background-image.png");
 
-export default function Index() {
+export default function HomeScreen() {
   const imageRef = useRef<View>(null);
   const [status, requestPermission] = MediaLibrary.usePermissions(); //ユーザーの機密情報にアクセスする許可を求めるhooks
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
