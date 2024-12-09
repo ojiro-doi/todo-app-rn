@@ -1,11 +1,19 @@
+import Btn from "@/components/Btn";
 import TabViewExample from "@/components/TabView";
+import { themeAtom } from "@/hooks/atom";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
+import { useAtom } from "jotai";
 
 export default function TabLayout() {
+  const [theme, setTheme] = useAtom(themeAtom);
   return (
     <>
       {/* <TabViewExample /> */}
+      <Btn
+        label={theme}
+        onPress={() => setTheme(theme === "light" ? "dark" : "light")}
+      />
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: "#ffd33d",

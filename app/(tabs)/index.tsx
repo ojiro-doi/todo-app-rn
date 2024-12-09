@@ -7,17 +7,20 @@ import { captureRef } from "react-native-view-shot";
 import domtoimage from "dom-to-image";
 
 import ImageViewer from "@/components/ImageViewer";
-import Button from "@/components/button";
+import Button from "@/components/Btn";
 import IconButton from "@/components/IconButton";
 import CircleButton from "@/components/CircleButton";
 import EmojiPicker from "@/components/EmojiPicker";
 import EmojiList from "@/components/EmojiList";
 import EmojiSticker from "@/components/EmojiSticker";
 import * as MediaLibrary from "expo-media-library";
+import { useAtom } from "jotai";
+import { themeAtom } from "@/hooks/atom";
 
 const PlaceholderImage = require("@/assets/images/background-image.png");
 
 export default function HomeScreen() {
+  const [theme] = useAtom(themeAtom);
   const imageRef = useRef<View>(null);
   const [status, requestPermission] = MediaLibrary.usePermissions(); //ユーザーの機密情報にアクセスする許可を求めるhooks
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
@@ -93,8 +96,8 @@ export default function HomeScreen() {
   };
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <View style={styles.imageContainer}>
+    <GestureHandlerRootView style={getStyles(theme).container}>
+      <View style={getStyles(theme).imageContainer}>
         <View ref={imageRef} collapsable={false}>
           <ImageViewer
             imgSource={PlaceholderImage}
@@ -106,8 +109,8 @@ export default function HomeScreen() {
         </View>
       </View>
       {showAppOptions ? (
-        <View style={styles.optionsContainer}>
-          <View style={styles.optionsRow}>
+        <View style={getStyles(theme).optionsContainer}>
+          <View style={getStyles(theme).optionsRow}>
             <IconButton icon="refresh" label="Reset" onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
             <IconButton
@@ -118,7 +121,7 @@ export default function HomeScreen() {
           </View>
         </View>
       ) : (
-        <View style={styles.footerContainer}>
+        <View style={getStyles(theme).footerContainer}>
           <Button
             theme="primary"
             label="Choose a photo"
@@ -137,25 +140,28 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#25292e",
-    alignItems: "center",
-  },
-  imageContainer: {
-    flex: 1,
-  },
-  footerContainer: {
-    flex: 1 / 3,
-    alignItems: "center",
-  },
-  optionsContainer: {
-    position: "absolute",
-    bottom: 80,
-  },
-  optionsRow: {
-    alignItems: "center",
-    flexDirection: "row",
-  },
-});
+const getStyles = (theme: "light" | "dark") =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme === "dark" ? "#25292e" : "#ffffff",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+
+    imageContainer: {
+      flex: 1,
+    },
+    footerContainer: {
+      flex: 1 / 3,
+      alignItems: "center",
+    },
+    optionsContainer: {
+      position: "absolute",
+      bottom: 80,
+    },
+    optionsRow: {
+      alignItems: "center",
+      flexDirection: "row",
+    },
+  });
