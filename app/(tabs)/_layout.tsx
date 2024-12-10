@@ -9,7 +9,6 @@ export default function TabLayout() {
   const [theme, setTheme] = useAtom(themeAtom);
   return (
     <>
-      {/* <TabViewExample /> */}
       <Btn
         label={theme}
         onPress={() => setTheme(theme === "light" ? "dark" : "light")}
